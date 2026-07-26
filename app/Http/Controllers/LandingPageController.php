@@ -23,7 +23,7 @@ class LandingPageController extends Controller
      */
     public function beritaIndex()
     {
-        $beritas = Berita::latest('tanggal_publish')->paginate(9); // Menggunakan paginasi agar rapi
+        $beritas = Berita::latest('tanggal_publish')->paginate(9);
         return view('berita.index', compact('beritas'));
     }
 
@@ -32,8 +32,8 @@ class LandingPageController extends Controller
      */
     public function beritaShow($id)
     {
-        // Mencari berdasarkan slug jika ada, jika tidak ada cari berdasarkan ID
-        $berita = Berita::where('slug', $id)->orWhere('id', $id)->firstOrFail();
+        $berita = Berita::findOrFail($id);
+
         return view('berita.show', compact('berita'));
     }
 

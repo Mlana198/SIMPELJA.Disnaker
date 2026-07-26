@@ -336,10 +336,9 @@
                                     <span class="material-symbols-outlined text-sm text-slate-400">group</span> Maks:
                                     {{ $pelatihan->kuota }} Peserta
                                 </span>
-                                <a href="/peserta/informasi-pelatihan/{{ $pelatihan->id }}"
+                                <a href="/login"
                                     class="inline-flex items-center gap-0.5 text-xs font-bold text-blue-600 hover:text-blue-800">
-                                    Detail & Daftar <span
-                                        class="material-symbols-outlined text-xs">arrow_forward</span>
+                                    Daftar <span class="material-symbols-outlined text-xs">arrow_forward</span>
                                 </a>
                             </div>
                         </div>
