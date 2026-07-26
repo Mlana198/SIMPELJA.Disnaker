@@ -14,7 +14,7 @@ class ListPendaftarans extends ListRecords
     {
         return [
             CreateAction::make()
-                ->label('Buat Pendaftaran Baru')
+                ->label('Daftar Pelatihan')
                 ->icon('heroicon-o-plus'),
         ];
     }

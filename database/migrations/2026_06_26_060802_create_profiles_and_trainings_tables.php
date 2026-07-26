@@ -69,7 +69,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('pendaftaran_id')->constrained('pendaftaran')->onDelete('cascade');
             $table->string('nomor_registrasi', 50)->unique();
-            $table->string('file_bukti_path', 255);
+            $table->string('file_bukti_path', 255)->nullable();
             $table->dateTime('tanggal_issued');
             $table->timestamps();
         });
