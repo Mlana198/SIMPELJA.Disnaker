@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('judul_materi', 100);
             $table->text('deskripsi');
             $table->string('file_materi_path', 255);
+            $table->string('link_video', 255)->nullable();
             $table->foreignId('uploaded_by')->constrained('users')->onDelete('restrict');
             $table->timestamps();
         });

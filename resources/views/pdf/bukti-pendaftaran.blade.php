@@ -72,7 +72,7 @@
 <body>
 
     <div class="header">
-        <h2>Bukti Kelulusan Administrasi</h2>
+        <h2>Bukti Pendaftaran</h2>
         <p>Sistem Informasi Manajemen Pelatihan Kerja (SIM-PELJA)</p>
     </div>
 

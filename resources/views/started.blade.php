@@ -304,7 +304,7 @@
                 </a>
             </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 @forelse($pelatihans as $index => $pelatihan)
                     <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden flex flex-col sm:flex-row slide-top transition-all duration-300 hover:shadow-md hover:-translate-y-1"
                         style="animation-delay: {{ ($index + 1) * 0.1 }}s">
