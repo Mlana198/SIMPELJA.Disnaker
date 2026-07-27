@@ -28,7 +28,7 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->favicon(asset('images/disnaker.png'))
-            ->brandName('Admin Panel')
+            ->brandName('Halaman Awal')
             ->login()
             ->homeUrl('/')
             ->profile()

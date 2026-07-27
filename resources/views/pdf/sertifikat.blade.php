@@ -325,8 +325,33 @@
                                 Kabupaten Situbondo
                             </div>
                             <div class="qr">
+                                @php
+                                    $textQrSertifikat =
+                                        "DOKUMEN SERTIFIKAT RESMI\n" .
+                                        "Dinas Ketenagakerjaan Kabupaten Situbondo\n\n" .
+                                        'Nomor Sertifikat: ' .
+                                        $nomor_sertifikat .
+                                        "\n" .
+                                        'Nama Peserta: ' .
+                                        strtoupper($nama_peserta) .
+                                        "\n" .
+                                        'Pelatihan: ' .
+                                        strtoupper($nama_pelatihan) .
+                                        "\n\n" .
+                                        "Disahkan Secara Elektronik Oleh:\n" .
+                                        "Jabatan: Kepala Dinas Ketenagakerjaan\n" .
+                                        'Nama: ' .
+                                        ($penandatangan_nama ?? 'KHOLIL, S.P., M.P.') .
+                                        "\n" .
+                                        'NIP: ' .
+                                        ($penandatangan_nip ?? '19680516 199203 1 012') .
+                                        "\n" .
+                                        'Tanggal Terbit: ' .
+                                        \Carbon\Carbon::parse($tanggal_terbit ?? now())->translatedFormat('d F Y');
+                                @endphp
+
                                 <img
-                                    src="data:image/svg+xml;base64,{{ base64_encode(SimpleSoftwareIO\QrCode\Facades\QrCode::size(72)->margin(0)->generate(url('/sertifikat/verifikasi/' . $nomor_sertifikat))) }}">
+                                    src="data:image/svg+xml;base64,{{ base64_encode(SimpleSoftwareIO\QrCode\Facades\QrCode::size(72)->margin(0)->generate($textQrSertifikat)) }}">
                             </div>
                             <div class="nama-ttd">
                                 {{ $penandatangan_nama ?? 'KHOLIL, S.P., M.P.' }}

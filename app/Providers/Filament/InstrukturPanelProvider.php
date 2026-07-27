@@ -28,7 +28,7 @@ class InstrukturPanelProvider extends PanelProvider
             ->id('instruktur')
             ->path('instruktur')
             ->favicon(asset('images/disnaker.png'))
-            ->brandName('Instruktur Panel')
+            ->brandName('Halaman Awal')
             ->homeUrl('/')
             ->profile()
             ->colors([

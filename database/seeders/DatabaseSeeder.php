@@ -20,6 +20,12 @@ class DatabaseSeeder extends Seeder
             BeritaSeeder::class,
             PendaftaranSeeder::class,
             BuktiPendaftaranSeeder::class,
+            JadwalInterviewSeeder::class,
+            PenilaianInterviewSeeder::class,
+            AbsensiSeeder::class,
+            MateriPelatihanSeeder::class,
+            PenilaianSeeder::class,
+            SertifikatSeeder::class
         ]);
     }
 }

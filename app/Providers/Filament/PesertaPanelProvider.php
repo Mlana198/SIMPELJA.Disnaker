@@ -28,7 +28,7 @@ class PesertaPanelProvider extends PanelProvider
             ->id('peserta')
             ->path('peserta')
             ->favicon(asset('images/disnaker.png'))
-            ->brandName('Peserta Panel')
+            ->brandName('Halaman Awal')
             ->login()
             ->registration()
             ->homeUrl('/')

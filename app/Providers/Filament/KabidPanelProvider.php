@@ -29,7 +29,7 @@ class KabidPanelProvider extends PanelProvider
             ->id('kabid')
             ->path('kabid')
             ->favicon(asset('images/disnaker.png'))
-            ->brandName('Kabid Panel')
+            ->brandName('Halaman Awal')
             ->homeUrl('/')
             ->profile()
             ->colors([

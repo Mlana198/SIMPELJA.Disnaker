@@ -29,7 +29,7 @@ class SubkoordinatorPanelProvider extends PanelProvider
             ->id('subkoordinator')
             ->path('subkoordinator')
             ->favicon(asset('images/disnaker.png'))
-            ->brandName('Subkoordinator Panel')
+            ->brandName('Halaman Awal')
             ->homeUrl('/')
             ->profile()
             ->colors([

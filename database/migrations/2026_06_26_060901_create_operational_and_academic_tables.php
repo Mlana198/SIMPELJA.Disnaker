@@ -24,7 +24,7 @@ return new class extends Migration
             $table->foreignId('pelatihans_id')->constrained('pelatihans')->onDelete('cascade');
             $table->string('judul_materi', 100);
             $table->text('deskripsi');
-            $table->string('file_materi_path', 255);
+            $table->string('file_materi_path', 255)->nullable();
             $table->string('link_video', 255)->nullable();
             $table->foreignId('uploaded_by')->constrained('users')->onDelete('restrict');
             $table->timestamps();

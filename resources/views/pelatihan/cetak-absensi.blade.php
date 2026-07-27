@@ -141,17 +141,27 @@
             vertical-align: middle;
         }
 
-        /* Susunan TTD Kabid */
         .footer-container {
-            margin-top: 35px;
+            margin-top: 30px;
             width: 100%;
             font-size: 10pt;
+            page-break-inside: avoid;
+            break-inside: avoid;
+        }
+
+        .footer-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .footer-table td {
+            border: none !important;
+            vertical-align: top;
         }
 
         .ttd-kabid {
-            float: right;
             text-align: center;
-            width: 300px;
+            width: 100%;
         }
 
         .ttd-kabid .nama-pejabat {
@@ -159,6 +169,7 @@
             font-weight: bold;
             text-decoration: underline;
             text-transform: uppercase;
+        }
         }
     </style>
 </head>
@@ -242,17 +253,28 @@
     </table>
 
     <div class="footer-container">
-        <div class="ttd-kabid">
-            <p>Situbondo, &nbsp;&nbsp;&nbsp; {{ now()->translatedFormat('F Y') }}</p>
-            <p style="font-weight: bold; text-transform: uppercase; margin: 0;">
-                Kepala Bidang Pelatihan Kerja<br>Produktivitas dan Transmigrasi
-            </p>
+        <table class="footer-table">
+            <tr>
+                <td style="width: 55%;"></td>
 
-            <p class="nama-pejabat">
-                {{ $kabid?->profil?->nama_lengkap ?? ($kabid?->name ?? '.................................') }}</p>
-            <p style="margin: 0;">NIP.
-                {{ $kabid?->profil?->nip ?? ($kabid?->nomor_identitas ?? '.................................') }}</p>
-        </div>
+                <td style="width: 45%;">
+                    <div class="ttd-kabid">
+                        <p style="margin: 0 0 5px 0;">Situbondo, &nbsp;&nbsp;&nbsp; {{ now()->translatedFormat('F Y') }}
+                        </p>
+                        <p style="font-weight: bold; text-transform: uppercase; margin: 0;">
+                            Kepala Bidang Pelatihan Kerja<br>Produktivitas dan Transmigrasi
+                        </p>
+
+                        <p class="nama-pejabat">
+                            {{ $kabid?->profil?->nama_lengkap ?? ($kabid?->name ?? '.................................') }}
+                        </p>
+                        <p style="margin: 0;">NIP.
+                            {{ $kabid?->profil?->nip ?? ($kabid?->nomor_identitas ?? '.................................') }}
+                        </p>
+                    </div>
+                </td>
+            </tr>
+        </table>
     </div>
 
 </body>

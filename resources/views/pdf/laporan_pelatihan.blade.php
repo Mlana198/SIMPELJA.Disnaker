@@ -124,9 +124,25 @@
             text-align: right;
         }
 
-        .footer {
-            margin-top: 40px;
+        .no-break {
+            page-break-inside: avoid;
+            break-inside: avoid;
+        }
+
+        tr {
+            page-break-inside: avoid;
+            break-inside: avoid;
+        }
+
+        .footer-table {
             width: 100%;
+            margin-top: 15px;
+            border-collapse: collapse;
+        }
+
+        .footer-table td {
+            border: none;
+            vertical-align: top;
         }
 
         .ttd {
@@ -650,60 +666,76 @@ font-style:italic;">
 
     <br>
 
-    <div class="section-title">
-
-        C. PENGESAHAN LAPORAN
-
-    </div>
-    <table style="width:100%; margin-top:10px; border-collapse:collapse;">
-        <tr>
-            <td
-                style="
-            text-align: justify;
-            line-height: 1.7;
-            text-indent: 40px;
-            font-size: 10pt;
-        ">
-                Berdasarkan hasil pelaksanaan pelatihan, proses evaluasi, serta hasil penilaian peserta sebagaimana
-                diuraikan dalam laporan ini, maka kegiatan pelatihan dinyatakan telah dilaksanakan sesuai dengan
-                ketentuan yang berlaku. Laporan ini disusun sebagai bentuk pertanggungjawaban pelaksanaan kegiatan
-                pelatihan kerja pada Dinas Ketenagakerjaan Kabupaten Situbondo dan digunakan sebagai dasar dalam
-                penetapan kelulusan peserta pelatihan.
-            </td>
-        </tr>
-    </table>
-    <div class="footer">
-
-        <div class="ttd">
-
-            <p style="margin-bottom:5px;">
-
-                Situbondo,
-                {{ now()->translatedFormat('d F Y') }}
-
-            </p>
-
-            <p style="margin:0;font-weight:bold;text-transform:uppercase;">
-
-                KEPALA BIDANG PELATIHAN KERJA<br>
-                PRODUKTIVITAS DAN TRANSMIGRASI
-
-            </p>
-
-            <br><br><br><br>
-
-            <p class="nama-pejabat">
-                {{ strtoupper($kabid?->profil?->nama_lengkap ?? ($kabid?->name ?? '................................')) }}
-            </p>
-
-            <p>
-                NIP. {{ $kabid?->nomor_identitas ?? '................................' }}
-            </p>
-
+    <div class="no-break">
+        <div class="section-title">
+            C. PENGESAHAN LAPORAN
         </div>
 
-    </div>
+        <table style="width:100%; margin-top:10px; border-collapse:collapse;">
+            <tr>
+                <td style="text-align: justify; line-height: 1.7; text-indent: 40px; font-size: 10pt;">
+                    Berdasarkan hasil pelaksanaan pelatihan, proses evaluasi, serta hasil penilaian peserta sebagaimana
+                    diuraikan dalam laporan ini, maka kegiatan pelatihan dinyatakan telah dilaksanakan sesuai dengan
+                    ketentuan yang berlaku. Laporan ini disusun sebagai bentuk pertanggungjawaban pelaksanaan kegiatan
+                    pelatihan kerja pada Dinas Ketenagakerjaan Kabupaten Situbondo dan digunakan sebagai dasar dalam
+                    penetapan kelulusan peserta pelatihan.
+                </td>
+            </tr>
+        </table>
 
+        <table class="footer-table">
+            <tr>
+                <td width="45%"></td>
+                <td width="55%" style="text-align: center;">
+                    <p style="margin-bottom: 5px;">
+                        Situbondo, {{ now()->translatedFormat('d F Y') }}
+                    </p>
+                    <p style="margin: 0; font-weight: bold; text-transform: uppercase;">
+                        KEPALA BIDANG PELATIHAN KERJA<br>
+                        PRODUKTIVITAS DAN TRANSMIGRASI
+                    </p>
+
+                    <div style="margin: 8px 0;">
+                        @php
+                            $namaKabid =
+                                $kabid?->profil?->nama_lengkap ?? ($kabid?->name ?? '................................');
+                            $nipKabid = $kabid?->nomor_identitas ?? '................................';
+                            $judulPelatihan = $pelatihan->nama_pelatihan ?? ($pelatihan->judul ?? 'Pelatihan Kerja');
+
+                            $textQrLaporan =
+                                "PENGESAHAN LAPORAN EVALUASI\n" .
+                                "Dinas Ketenagakerjaan Kabupaten Situbondo\n\n" .
+                                'Kegiatan: ' .
+                                strtoupper($judulPelatihan) .
+                                "\n" .
+                                "Status: Disahkan & Dinyatakan Valid\n\n" .
+                                "Disahkan Oleh:\n" .
+                                "Jabatan: Kabid Pelatihan Kerja, Produktivitas dan Transmigrasi\n" .
+                                'Nama: ' .
+                                strtoupper($namaKabid) .
+                                "\n" .
+                                'NIP: ' .
+                                $nipKabid .
+                                "\n" .
+                                'Tanggal Pengesahan: ' .
+                                now()->translatedFormat('d F Y');
+                        @endphp
+
+                        <img src="data:image/svg+xml;base64,{{ base64_encode(SimpleSoftwareIO\QrCode\Facades\QrCode::size(80)->margin(0)->generate($textQrLaporan)) }}"
+                            width="80" height="80" alt="QR Pengesahan">
+                    </div>
+
+                    <p class="nama-pejabat"
+                        style="margin-top: 0; font-weight: bold; text-decoration: underline; text-transform: uppercase;">
+                        {{ strtoupper($kabid?->profil?->nama_lengkap ?? ($kabid?->name ?? '................................')) }}
+                    </p>
+                    <p style="margin: 0; font-size: 9pt;">
+                        NIP. {{ $kabid?->nomor_identitas ?? '................................' }}
+                    </p>
+                </td>
+            </tr>
+        </table>
+    </div>
 </body>
 
 </html>
