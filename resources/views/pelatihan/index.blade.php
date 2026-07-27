@@ -28,7 +28,7 @@
     <!-- Main Content -->
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <div class="mb-8">
-            <h2 class="text-2xl font-bold text-slate-900">Daftar Pelatihan Aktif</h2>
+            <h2 class="text-2xl font-bold text-slate-900">Daftar Pelatihan</h2>
             <p class="text-slate-500 text-sm mt-1">Pilih program pelatihan kerja yang sedang dibuka untuk meningkatkan
                 keterampilan Anda.</p>
         </div>
@@ -50,16 +50,30 @@
                         @endif
 
                         <div class="p-5">
-                            <!-- Badge Angkatan & Status -->
+                            <!-- Badge Angkatan & Dynamic Status Periode -->
                             <div class="flex items-center justify-between mb-3">
                                 <span
-                                    class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800">
+                                    class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-slate-100 text-slate-700">
                                     Angkatan {{ $pelatihan->angkatan }}
                                 </span>
-                                <span class="inline-flex items-center gap-1 text-xs font-medium text-slate-500">
-                                    <span class="material-symbols-outlined text-sm text-slate-400">groups</span>
-                                    Kuota: {{ $pelatihan->kuota }} Peserta
-                                </span>
+
+                                {{-- Dynamic Badge Berdasarkan Status Periode --}}
+                                @if ($pelatihan->status_periode === 'aktif')
+                                    <span
+                                        class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800">
+                                        Aktif
+                                    </span>
+                                @elseif($pelatihan->status_periode === 'selesai')
+                                    <span
+                                        class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-blue-100 text-blue-800">
+                                        Selesai
+                                    </span>
+                                @else
+                                    <span
+                                        class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-rose-100 text-rose-800">
+                                        Non-Aktif
+                                    </span>
+                                @endif
                             </div>
 
                             <!-- Judul Pelatihan -->
@@ -83,21 +97,30 @@
                         </div>
                     </div>
 
-                    <!-- Footer Card / Tombol Aksi -->
+                    <!-- Footer Card / Tombol Aksi Kustom Berdasarkan Status -->
                     <div class="p-5 pt-0">
-                        @auth
-                            <a href="{{ route('login') }}"
-                                class="w-full inline-flex justify-center items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold py-2.5 px-4 rounded-lg transition-colors shadow-sm">
-                                Daftar Sekarang
-                                <span class="material-symbols-outlined text-sm">arrow_forward</span>
-                            </a>
+                        @if ($pelatihan->status_periode === 'aktif')
+                            @auth
+                                <a href="{{ route('login') }}"
+                                    class="w-full inline-flex justify-center items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold py-2.5 px-4 rounded-lg transition-colors shadow-sm">
+                                    Daftar Sekarang
+                                    <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                                </a>
+                            @else
+                                <a href="{{ route('login') }}"
+                                    class="w-full inline-flex justify-center items-center gap-2 bg-slate-900 hover:bg-slate-800 text-white text-sm font-semibold py-2.5 px-4 rounded-lg transition-colors shadow-sm">
+                                    Login untuk Mendaftar
+                                    <span class="material-symbols-outlined text-sm">login</span>
+                                </a>
+                            @endauth
                         @else
-                            <a href="{{ route('login') }}"
-                                class="w-full inline-flex justify-center items-center gap-2 bg-slate-900 hover:bg-slate-800 text-white text-sm font-semibold py-2.5 px-4 rounded-lg transition-colors shadow-sm">
-                                Login untuk Mendaftar
-                                <span class="material-symbols-outlined text-sm">login</span>
-                            </a>
-                        @endauth
+                            {{-- Jika status Selesai atau Non-Aktif, tombol pendaftaran di-nonaktifkan --}}
+                            <button disabled
+                                class="w-full inline-flex justify-center items-center gap-2 bg-slate-100 text-slate-400 text-sm font-semibold py-2.5 px-4 rounded-lg cursor-not-allowed">
+                                Pendaftaran Ditutup
+                                <span class="material-symbols-outlined text-sm">lock</span>
+                            </button>
+                        @endif
                     </div>
 
                 </div>
@@ -105,9 +128,7 @@
                 <div
                     class="col-span-full text-center py-16 bg-white rounded-xl border border-dashed border-slate-200 text-slate-400">
                     <span class="material-symbols-outlined text-5xl mb-2 text-slate-300">model_training</span>
-                    <p class="text-base font-medium text-slate-600">Saat ini belum ada pelatihan aktif yang dibuka.</p>
-                    <p class="text-xs text-slate-400 mt-1">Silakan cek kembali secara berkala untuk pembaruan jadwal
-                        pelatihan.</p>
+                    <p class="text-base font-medium text-slate-600">Saat ini belum ada data pelatihan.</p>
                 </div>
             @endforelse
         </div>

@@ -42,7 +42,8 @@ class LandingPageController extends Controller
      */
     public function pelatihanIndex()
     {
-        $pelatihans = Pelatihan::where('status_periode', 'aktif')->latest()->paginate(6);
+        $pelatihans = Pelatihan::latest()->paginate(6);
+
         return view('pelatihan.index', compact('pelatihans'));
     }
 }

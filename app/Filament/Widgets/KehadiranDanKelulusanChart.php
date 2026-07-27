@@ -14,6 +14,8 @@ class KehadiranDanKelulusanChart extends ChartWidget implements HasForms
 {
     use InteractsWithForms;
 
+    protected static ?int $sort = 2;
+
     public ?string $pelatihanId = null;
 
     public function getHeading(): string
@@ -55,10 +57,8 @@ class KehadiranDanKelulusanChart extends ChartWidget implements HasForms
             ];
         }
 
-        // 1. Menghitung total pendaftar pada pelatihan terpilih
         $totalPendaftar = Pendaftaran::where('pelatihans_id', $selectedId)->count();
 
-        // 2. REVISI: Hitung langsung dari tabel pendaftaran berdasarkan kolom status_kelulusan
         $totalLulus = Pendaftaran::where('pelatihans_id', $selectedId)
             ->where('status_kelulusan', 'lulus')
             ->count();

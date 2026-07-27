@@ -3,6 +3,8 @@
 namespace App\Providers\Filament;
 
 // use Filament\Http\Middleware\Authenticate;
+use App\Filament\Widgets\KehadiranDanKelulusanChart;
+use App\Livewire\StatsOverview;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
@@ -40,10 +42,11 @@ class AdminPanelProvider extends PanelProvider
             ->pages([
                 Dashboard::class,
             ])
-            ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\Filament\Widgets')
             ->widgets([
                 AccountWidget::class,
                 FilamentInfoWidget::class,
+                StatsOverview::class,
+                KehadiranDanKelulusanChart::class,
             ])
             ->spa()
             ->sidebarWidth('17rem')
