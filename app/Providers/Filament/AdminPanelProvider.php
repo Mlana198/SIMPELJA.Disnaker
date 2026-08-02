@@ -2,8 +2,8 @@
 
 namespace App\Providers\Filament;
 
-// use Filament\Http\Middleware\Authenticate;
-use App\Filament\Widgets\KehadiranDanKelulusanChart;
+use App\Livewire\JumlahPesertaChart;
+use App\Livewire\RataRataKehadiranChart;
 use App\Livewire\StatsOverview;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -46,7 +46,8 @@ class AdminPanelProvider extends PanelProvider
                 AccountWidget::class,
                 FilamentInfoWidget::class,
                 StatsOverview::class,
-                KehadiranDanKelulusanChart::class,
+                JumlahPesertaChart::class,
+                RataRataKehadiranChart::class,
             ])
             ->spa()
             ->sidebarWidth('17rem')

@@ -3,7 +3,8 @@
 namespace App\Providers\Filament;
 
 use App\Filament\Pages\MyProfile;
-use App\Filament\Widgets\KehadiranDanKelulusanChart;
+use App\Livewire\JumlahPesertaChart;
+use App\Livewire\RataRataKehadiranChart;
 use App\Livewire\StatsOverview;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
@@ -47,7 +48,8 @@ class KabidPanelProvider extends PanelProvider
                 AccountWidget::class,
                 FilamentInfoWidget::class,
                 StatsOverview::class,
-                KehadiranDanKelulusanChart::class,
+                JumlahPesertaChart::class,
+                RataRataKehadiranChart::class,
             ])
             ->spa()
             ->sidebarWidth('17rem')
