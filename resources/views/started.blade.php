@@ -108,7 +108,7 @@
                         <img src="{{ asset('logos/disnaker.png') }}" alt="Logo Disnaker"
                             class="h-10 w-auto object-contain" />
                         <span
-                            class="text-white font-bold tracking-wide text-sm lg:text-base font-headline">SIAP KERJA</span>
+                            class="text-white font-bold tracking-wide text-sm lg:text-base font-headline">SIM-PELJA</span>
                     </a>
                 </div>
 
