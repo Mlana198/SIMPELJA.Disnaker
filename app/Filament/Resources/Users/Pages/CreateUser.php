@@ -8,4 +8,12 @@ use Filament\Resources\Pages\CreateRecord;
 class CreateUser extends CreateRecord
 {
     protected static string $resource = UserResource::class;
+
+    public function getBreadcrumbs(): array
+    {
+        return [
+            $this->getResource()::getUrl('index') => $this->getResource()::getPluralModelLabel(),
+            'Tambah Kelulusan',
+        ];
+    }
 }

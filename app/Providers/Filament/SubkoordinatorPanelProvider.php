@@ -3,7 +3,6 @@
 namespace App\Providers\Filament;
 
 use App\Filament\Pages\MyProfile;
-use App\Filament\Widgets\KehadiranDanKelulusanChart;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -28,6 +27,7 @@ class SubkoordinatorPanelProvider extends PanelProvider
         return $panel
             ->id('subkoordinator')
             ->path('subkoordinator')
+            ->globalSearch(false)
             ->favicon(asset('images/disnaker.png'))
             ->brandName('Halaman Awal')
             ->homeUrl('/')
@@ -45,7 +45,6 @@ class SubkoordinatorPanelProvider extends PanelProvider
             ->widgets([
                 AccountWidget::class,
                 FilamentInfoWidget::class,
-                KehadiranDanKelulusanChart::class,
             ])
             ->spa()
             ->sidebarWidth('17rem')

@@ -13,11 +13,11 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->string('nama_lengkap', 100);
-            $table->string('no_hp', 15);
-            $table->enum('gender', ['L', 'P']);
-            $table->string('tempat_lahir', 50);
-            $table->date('tanggal_lahir');
-            $table->text('alamat');
+            $table->string('no_hp', 15)->nullable();
+            $table->enum('gender', ['L', 'P'])->nullable();
+            $table->string('tempat_lahir', 50)->nullable();
+            $table->date('tanggal_lahir')->nullable();
+            $table->text('alamat')->nullable();
             $table->timestamps();
         });
 

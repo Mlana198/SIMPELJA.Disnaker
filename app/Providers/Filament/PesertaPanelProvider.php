@@ -27,6 +27,7 @@ class PesertaPanelProvider extends PanelProvider
         return $panel
             ->id('peserta')
             ->path('peserta')
+            ->globalSearch(false)
             ->favicon(asset('images/disnaker.png'))
             ->brandName('Halaman Awal')
             ->login()

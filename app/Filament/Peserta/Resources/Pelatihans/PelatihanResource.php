@@ -2,7 +2,6 @@
 
 namespace App\Filament\Peserta\Resources\Pelatihans;
 
-use App\Filament\Instruktur\Resources\Pelatihans\Pages\ViewPelatihan;
 use App\Filament\Peserta\Resources\Pelatihans\Pages\ListPelatihans;
 use App\Filament\Peserta\Resources\Pelatihans\Schemas\PelatihanForm;
 use App\Filament\Peserta\Resources\Pelatihans\Tables\PelatihansTable;
@@ -50,7 +49,6 @@ class PelatihanResource extends Resource
     {
         return [
             'index' => ListPelatihans::route('/'),
-            'view' => ViewPelatihan::route('/{record}'),
         ];
     }
 }

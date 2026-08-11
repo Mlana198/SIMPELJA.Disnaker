@@ -8,4 +8,12 @@ use Filament\Resources\Pages\CreateRecord;
 class CreateKelulusan extends CreateRecord
 {
     protected static string $resource = KelulusanResource::class;
+
+    public function getBreadcrumbs(): array
+    {
+        return [
+            $this->getResource()::getUrl('index') => $this->getResource()::getPluralModelLabel(),
+            'Tambah Kelulusan',
+        ];
+    }
 }

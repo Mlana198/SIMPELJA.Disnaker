@@ -29,6 +29,7 @@ class AdminPanelProvider extends PanelProvider
             ->default()
             ->id('admin')
             ->path('admin')
+            ->globalSearch(false)
             ->favicon(asset('images/disnaker.png'))
             ->brandName('Halaman Awal')
             ->login()

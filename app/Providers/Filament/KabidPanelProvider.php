@@ -30,6 +30,7 @@ class KabidPanelProvider extends PanelProvider
         return $panel
             ->id('kabid')
             ->path('kabid')
+            ->globalSearch(false)
             ->favicon(asset('images/disnaker.png'))
             ->brandName('Halaman Awal')
             ->homeUrl('/')
