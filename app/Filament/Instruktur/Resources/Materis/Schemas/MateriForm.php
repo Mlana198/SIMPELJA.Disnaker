@@ -62,7 +62,8 @@ class MateriForm
                         TextInput::make('link_video')
                             ->label('Link Video Eksternal (Opsional)')
                             ->placeholder('https://youtube.com/... atau https://drive.google.com/...')
-                            ->url(),
+                            ->url()
+                            ->maxLength(255),
                     ])->columns(2),
             ]);
     }

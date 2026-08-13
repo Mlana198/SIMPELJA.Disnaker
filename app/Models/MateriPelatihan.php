@@ -13,6 +13,7 @@ class MateriPelatihan extends Model
         'judul_materi',
         'deskripsi',
         'file_materi_path',
+        'link_video',
         'uploaded_by'
     ];
 
