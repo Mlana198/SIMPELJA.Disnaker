@@ -39,7 +39,7 @@ class LaporanPelatihanForm
                                 }),
 
                             TextInput::make('total_peserta_lulus')
-                                ->label('Peserta Lulus (Penilaian Instruktur)')
+                                ->label('Total Peserta Lulus')
                                 ->disabled()
                                 ->afterStateHydrated(function ($component, $record) {
                                     if (!$record) {
@@ -78,7 +78,7 @@ class LaporanPelatihanForm
                             ->placeholder('Tidak ada catatan revisi.')
                             ->rows(3),
                     ])
-                    ->visible(fn ($record) => $record && filled($record->catatan_revisi)),
+                    ->visible(fn($record) => $record && filled($record->catatan_revisi)),
             ]);
     }
 }

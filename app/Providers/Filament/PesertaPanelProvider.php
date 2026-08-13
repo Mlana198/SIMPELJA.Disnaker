@@ -32,6 +32,7 @@ class PesertaPanelProvider extends PanelProvider
             ->brandName('Halaman Awal')
             ->login()
             ->registration()
+            ->emailVerification()
             ->homeUrl('/')
             ->profile()
             ->colors([

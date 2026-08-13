@@ -11,6 +11,7 @@ use App\Models\Pelatihan;
 use App\Models\Pendaftaran;
 use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -47,6 +48,39 @@ Route::get('/register', function () {
 })->name('register');
 
 Route::post('/register', [RegisterController::class, 'register'])->name('register.post');
+Route::get('/email/verify', function () {
+    return view('auth.verify-email');
+})->middleware('auth')->name('verification.notice');
+
+Route::get('/email/verify/{id}/{hash}', function ($id, $hash) {
+
+    $user = User::findOrFail($id);
+
+    // Pastikan hash sesuai dengan email user
+    if (! hash_equals(
+        (string) $hash,
+        sha1($user->getEmailForVerification())
+    )) {
+        abort(403, 'Tautan verifikasi email tidak valid.');
+    }
+
+    // Tandai email sebagai sudah diverifikasi
+    if (! $user->hasVerifiedEmail()) {
+        $user->markEmailAsVerified();
+    }
+
+    return redirect('/login')->with(
+        'status',
+        'Email berhasil diverifikasi. Silakan masuk ke akun Anda.'
+    );
+})->middleware('signed')->name('verification.verify');
+
+Route::post('/email/verification-notification', function (Request $request) {
+    $request->user()->sendEmailVerificationNotification();
+
+    return back()->with('status', 'verification-link-sent');
+})->middleware(['auth', 'throttle:6,1'])
+    ->name('verification.send');
 
 Route::post('/logout', function () {
     Auth::logout();

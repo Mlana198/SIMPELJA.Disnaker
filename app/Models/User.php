@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Filament\Models\Contracts\HasAvatar;
 use Filament\Tables\Columns\Layout\Panel;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Auth\MustVerifyEmail as MustVerifyEmailTrait;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -12,12 +14,12 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Storage;
 
-#[Fillable(['nomor_identitas', 'email', 'password', 'role', 'avatar_url'])]
+#[Fillable(['nomor_identitas', 'email', 'email_verified_at', 'password', 'role', 'avatar_url'])]
 #[Hidden(['password', 'remember_token'])]
-class User extends Authenticatable implements HasAvatar
+class User extends Authenticatable implements HasAvatar, MustVerifyEmail
 {
     /** @use HasFactory<UserFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, MustVerifyEmailTrait;
 
     /**
      * Get the attributes that should be cast.
@@ -40,8 +42,6 @@ class User extends Authenticatable implements HasAvatar
     public function canAccessPanel(Panel $panel): bool
     {
         $id = $panel->getId();
-
-        // Mapping akses yang eksklusif (tidak ada yang tumpang tindih)
         return match ($this->role) {
             'admin'           => $id === 'admin',
             'kabid'           => $id === 'kabid',

@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
 use App\Models\ProfilPengguna;
+use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class RegisterController extends Controller
 {
@@ -39,6 +39,7 @@ class RegisterController extends Controller
                 'password' => [
                     'required',
                     'min:8',
+                    'confirmed',
                 ],
             ],
             [
@@ -59,10 +60,13 @@ class RegisterController extends Controller
 
                 'password.min' =>
                 'Password minimal harus terdiri dari 8 karakter.',
+
+                'password.confirmed' =>
+                'Konfirmasi password tidak sesuai.',
             ]
         );
 
-        DB::transaction(function () use ($request) {
+        $user = DB::transaction(function () use ($request) {
 
             $user = User::create([
                 'nomor_identitas' => $request->nomor_identitas,
@@ -76,9 +80,13 @@ class RegisterController extends Controller
                 'nama_lengkap' => $request->nama_lengkap,
             ]);
 
-            Auth::login($user);
+            return $user;
         });
 
-        return redirect('/peserta');
+        Auth::login($user);
+
+        $user->sendEmailVerificationNotification();
+
+        return redirect()->route('verification.notice');
     }
 }

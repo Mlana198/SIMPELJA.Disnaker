@@ -16,6 +16,7 @@ return new class extends Migration
             $table->id();
             $table->string('nomor_identitas', 18)->unique();
             $table->string('email', 100)->unique();
+            $table->timestamp('email_verified_at')->nullable();
             $table->string('password', 255);
             $table->enum('role', ['peserta', 'admin', 'sub_koordinator', 'instruktur', 'kabid']);
             $table->string('avatar_url')->nullable();
