@@ -3,6 +3,9 @@
 namespace App\Providers\Filament;
 
 use App\Filament\Pages\MyProfile;
+use App\Livewire\JumlahPesertaChart;
+use App\Livewire\RataRataKehadiranChart;
+use App\Livewire\StatsOverview;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -45,6 +48,9 @@ class InstrukturPanelProvider extends PanelProvider
             ->widgets([
                 AccountWidget::class,
                 FilamentInfoWidget::class,
+                StatsOverview::class,
+                JumlahPesertaChart::class,
+                RataRataKehadiranChart::class,
             ])
             ->spa()
             ->sidebarWidth('17rem')

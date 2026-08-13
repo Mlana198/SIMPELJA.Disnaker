@@ -16,6 +16,7 @@ use Filament\Pages\Page;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 use UnitEnum;
 
 class MyProfile extends Page implements HasForms
@@ -79,7 +80,20 @@ class MyProfile extends Page implements HasForms
                             ->label('Nomor HP / WhatsApp')
                             ->required()
                             ->tel()
-                            ->maxLength(15),
+                            ->maxLength(15)
+                            ->rules(function () {
+                                $user = Auth::user();
+
+                                $profilId = $user?->profil?->id;
+
+                                return [
+                                    Rule::unique('profil_pengguna', 'no_hp')
+                                        ->ignore($profilId),
+                                ];
+                            })
+                            ->validationMessages([
+                                'unique' => 'Nomor HP tersebut sudah digunakan oleh akun lain.',
+                            ]),
 
                         Select::make('gender')
                             ->label('Jenis Kelamin')

@@ -14,24 +14,65 @@ class RegisterController extends Controller
 {
     public function register(Request $request)
     {
-        $request->validate([
-            'nama_lengkap'    => 'required|string|max:255',
-            'nomor_identitas' => 'required|unique:users,nomor_identitas',
-            'email'           => 'required|email|unique:users,email',
-            'password'        => 'required|min:8',
-        ]);
+        $request->validate(
+            [
+                'nama_lengkap' => [
+                    'required',
+                    'string',
+                    'max:100',
+                ],
+
+                'nomor_identitas' => [
+                    'required',
+                    'string',
+                    'max:18',
+                    'unique:users,nomor_identitas',
+                ],
+
+                'email' => [
+                    'required',
+                    'email',
+                    'max:100',
+                    'unique:users,email',
+                ],
+
+                'password' => [
+                    'required',
+                    'min:8',
+                ],
+            ],
+            [
+                'nomor_identitas.unique' =>
+                'Nomor identitas tersebut sudah digunakan oleh akun lain.',
+
+                'email.unique' =>
+                'Email tersebut sudah digunakan oleh akun lain.',
+
+                'nomor_identitas.required' =>
+                'Nomor identitas wajib diisi.',
+
+                'email.required' =>
+                'Email wajib diisi.',
+
+                'email.email' =>
+                'Format email tidak valid.',
+
+                'password.min' =>
+                'Password minimal harus terdiri dari 8 karakter.',
+            ]
+        );
 
         DB::transaction(function () use ($request) {
 
             $user = User::create([
                 'nomor_identitas' => $request->nomor_identitas,
-                'email'           => $request->email,
-                'password'        => Hash::make($request->password),
-                'role'            => 'peserta',
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+                'role' => 'peserta',
             ]);
 
             ProfilPengguna::create([
-                'user_id'      => $user->id,
+                'user_id' => $user->id,
                 'nama_lengkap' => $request->nama_lengkap,
             ]);
 

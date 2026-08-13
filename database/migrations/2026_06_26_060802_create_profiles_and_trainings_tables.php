@@ -11,9 +11,9 @@ return new class extends Migration
         // 1. Tabel profil_pengguna
         Schema::create('profil_pengguna', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('user_id')->unique()->constrained('users')->onDelete('cascade');
             $table->string('nama_lengkap', 100);
-            $table->string('no_hp', 15)->nullable();
+            $table->string('no_hp', 15)->nullable()->unique();
             $table->enum('gender', ['L', 'P'])->nullable();
             $table->string('tempat_lahir', 50)->nullable();
             $table->date('tanggal_lahir')->nullable();
@@ -34,6 +34,7 @@ return new class extends Migration
         // 3. Tabel pelatihans
         Schema::create('pelatihans', function (Blueprint $table) {
             $table->id();
+            $table->string('foto')->nullable();
             $table->string('nama_pelatihan', 100);
             $table->text('deskripsi');
             $table->integer('kuota');
@@ -41,21 +42,37 @@ return new class extends Migration
             $table->date('tanggal_mulai');
             $table->date('tanggal_selesai');
             $table->enum('status_periode', ['aktif', 'non-aktif', 'selesai']);
+            $table->enum('status_laporan', ['draft', 'diajukan', 'disetujui', 'direvisi', 'ditolak'])
+                ->default('draft');
             $table->timestamps();
         });
 
-        // 4. Tabel pendaftaran
+        // 4. Tabel dokumen_pelatihans
+        Schema::create('dokumen_pelatihans', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('pelatihans_id')->constrained('pelatihans')->onDelete('cascade');
+            $table->string('nama_dokumen');
+            $table->enum('jenis_dokumen', ['SK', 'Undangan', 'Lainnya']);
+            $table->string('file_path');
+            $table->timestamps();
+        });
+
+        // 5. Tabel pendaftaran
         Schema::create('pendaftaran', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('restrict');
             $table->foreignId('pelatihans_id')->constrained('pelatihans')->onDelete('restrict');
             $table->date('tanggal_daftar');
             $table->enum('status_seleksi_administrasi', ['pending', 'lolos', 'tidak_lolos'])->default('pending');
+            $table->enum('status_kelulusan', ['lulus', 'tidak_lulus', 'pending'])
+                ->default('pending');
+            $table->boolean('is_sent_to_koordinator')->default(false);
+            $table->boolean('is_notified')->default(false);
             $table->text('catatan_keputusan')->nullable();
             $table->timestamps();
         });
 
-        // 5. Tabel berkas_pendaftaran
+        // 6. Tabel berkas_pendaftaran
         Schema::create('berkas_pendaftaran', function (Blueprint $table) {
             $table->id();
             $table->foreignId('pendaftaran_id')->constrained('pendaftaran')->onDelete('cascade');
@@ -64,7 +81,7 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        // 6. Tabel bukti_pendaftaran
+        // 7. Tabel bukti_pendaftaran
         Schema::create('bukti_pendaftaran', function (Blueprint $table) {
             $table->id();
             $table->foreignId('pendaftaran_id')->constrained('pendaftaran')->onDelete('cascade');

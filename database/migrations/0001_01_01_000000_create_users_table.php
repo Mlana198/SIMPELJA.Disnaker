@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('email', 100)->unique();
             $table->string('password', 255);
             $table->enum('role', ['peserta', 'admin', 'sub_koordinator', 'instruktur', 'kabid']);
+            $table->string('avatar_url')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
