@@ -36,7 +36,18 @@ class JadwalInterviewsTable
 
                 TextColumn::make('pendaftaran.user.profil.nama_lengkap')
                     ->label('Nama Calon Peserta')
-                    ->searchable(),
+                    ->searchable(query: function (Builder $query, string $search): Builder {
+                        return $query->whereHas(
+                            'pendaftaran.user.profil',
+                            function (Builder $query) use ($search) {
+                                $query->where(
+                                    'nama_lengkap',
+                                    'like',
+                                    "%{$search}%"
+                                );
+                            }
+                        );
+                    }),
 
                 TextColumn::make('waktu_interview')
                     ->label('Tanggal & Waktu')

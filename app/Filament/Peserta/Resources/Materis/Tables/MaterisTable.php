@@ -35,7 +35,7 @@ class MaterisTable
             ])
             ->recordActions([
                 Action::make('download')
-                    ->label('Unduh Berkas')
+                    ->label('Unduh Materi')
                     ->icon('heroicon-o-arrow-down-tray')
                     ->color('success')
                     ->visible(fn($record): bool => !empty($record->file_materi_path))

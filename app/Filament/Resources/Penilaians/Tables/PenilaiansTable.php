@@ -7,6 +7,7 @@ use Filament\Actions\BulkActionGroup;
 use Filament\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Spatie\SimpleExcel\SimpleExcelWriter;
 
@@ -22,19 +23,23 @@ class PenilaiansTable
                 TextColumn::make('user_id')
                     ->label('Peserta')
                     ->getStateUsing(function ($record) {
-                        // Ambil nama langsung dari tabel profil_pengguna berdasarkan user_id di record penilaian
-                        $profil = \App\Models\ProfilPengguna::where('user_id', $record->user_id)->first();
-
-                        return $profil ? $profil->nama_lengkap : ($record->user?->name ?? 'Pengguna');
+                        return $record->user?->profil?->nama_lengkap
+                            ?? 'Pengguna';
                     })
-                    ->searchable(query: function (\Illuminate\Database\Eloquent\Builder $query, string $search): \Illuminate\Database\Eloquent\Builder {
-                        return $query->whereHas('user', function ($q) use ($search) {
-                            $q->whereHas('profil', function ($qp) use ($search) {
-                                $qp->where('nama_lengkap', 'like', "%{$search}%");
-                            });
-                        });
-                    })
-                    ->searchable()
+                    ->searchable(
+                        query: function (Builder $query, string $search): Builder {
+                            return $query->whereHas(
+                                'user.profil',
+                                function (Builder $query) use ($search) {
+                                    $query->where(
+                                        'nama_lengkap',
+                                        'like',
+                                        "%{$search}%"
+                                    );
+                                }
+                            );
+                        }
+                    )
                     ->sortable(),
                 TextColumn::make('nilai_teori')
                     ->numeric()
@@ -55,7 +60,6 @@ class PenilaiansTable
                     ->sortable(),
                 TextColumn::make('instruktur.name')
                     ->label('Instruktur Penilai')
-                    ->searchable()
                     ->sortable(),
                 TextColumn::make('created_at')
                     ->dateTime()

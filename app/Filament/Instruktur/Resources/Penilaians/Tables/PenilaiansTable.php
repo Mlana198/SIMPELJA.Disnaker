@@ -25,7 +25,7 @@ class PenilaiansTable
                         // Ambil nama langsung dari tabel profil_pengguna berdasarkan user_id di record penilaian
                         $profil = \App\Models\ProfilPengguna::where('user_id', $record->user_id)->first();
 
-                        return $profil ? $profil->nama_lengkap : ($record->user?->name ?? 'Pengguna');
+                        return $profil?->nama_lengkap  ?? 'Pengguna';
                     })
                     ->searchable(query: function (\Illuminate\Database\Eloquent\Builder $query, string $search): \Illuminate\Database\Eloquent\Builder {
                         return $query->whereHas('user', function ($q) use ($search) {
@@ -34,7 +34,6 @@ class PenilaiansTable
                             });
                         });
                     })
-                    ->searchable()
                     ->sortable(),
                 TextColumn::make('nilai_teori')
                     ->label('Teori')
@@ -58,7 +57,6 @@ class PenilaiansTable
                     ->wrap(),
                 TextColumn::make('instruktur.name')
                     ->label('Instruktur Penilai')
-                    ->searchable()
                     ->sortable(),
                 TextColumn::make('created_at')
                     ->dateTime()

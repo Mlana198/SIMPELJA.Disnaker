@@ -10,7 +10,9 @@ use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Str;
 
@@ -23,7 +25,13 @@ class KelulusansTable
                 TextColumn::make('pelatihan.nama_pelatihan')
                     ->label('Pelatihan'),
                 TextColumn::make('user.profil.nama_lengkap')
-                    ->label('Peserta'),
+                    ->label('Peserta')
+                    ->searchable(query: function (Builder $query, string $search): Builder {
+                        return $query->whereHas('user.profil', function (Builder $q) use ($search) {
+                            $q->where('nama_lengkap', 'like', "%{$search}%");
+                        });
+                    })
+                    ->sortable(),
                 TextColumn::make('status_kelulusan')
                     ->label('Status Kelulusan')
                     ->badge()
@@ -39,7 +47,14 @@ class KelulusansTable
                     ]),
             ])
             ->filters([
-                //
+                SelectFilter::make('status_kelulusan')
+                    ->label('Status Kelulusan')
+                    ->options([
+                        'lulus' => 'Lulus',
+                        'tidak_lulus' => 'Tidak Lulus',
+                        'pending' => 'Pending',
+                    ])
+                    ->placeholder('Semua Status'),
             ])
             ->recordActions([
                 EditAction::make(),
